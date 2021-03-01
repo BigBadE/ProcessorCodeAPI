@@ -18,6 +18,8 @@ allprojects {
     apply plugin: 'io.freefair.lombok'
     apply plugin: 'com.github.johnrengelman.shadow'
 
+    version '1.0.0'
+
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
 
@@ -43,24 +45,26 @@ allprojects {
         testImplementation 'org.powermock:powermock-module-junit4:2.0.7'
         testImplementation 'org.powermock:powermock-api-mockito2:2.0.7'
     }
+
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                from components.java
+            }
+        }
+        repositories {
+            mavenLocal()
+        }
+    }
 }
 
+subprojects {
+    group 'com.bigbade.processorcodeapi'
+}
 build.finalizedBy(shadowJar)
 
 shadowJar {
     archiveClassifier.set('')
 }
 
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            from components.java
-        }
-    }
-    repositories {
-        mavenLocal()
-    }
-}
-
 group 'com.bigbade'
-version '1.0.0'
