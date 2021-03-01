@@ -6,6 +6,12 @@ plugins {
     id 'io.freefair.aggregate-javadoc-jar' version '5.3.0'
 }
 
+dependencies {
+    implementation project(':core')
+    implementation project(':javac')
+    implementation project(':eclipse')
+}
+
 allprojects {
     apply plugin: 'maven-publish'
     apply plugin: 'java'
@@ -17,6 +23,10 @@ allprojects {
 
     lombok {
         version = '1.18.16'
+    }
+
+    java {
+        withSourcesJar()
     }
 
     repositories {
@@ -39,12 +49,6 @@ build.finalizedBy(shadowJar)
 
 shadowJar {
     archiveClassifier.set('')
-}
-
-dependencies {
-    implementation project(':core')
-    implementation project(':javac')
-    implementation project(':eclipse')
 }
 
 publishing {
