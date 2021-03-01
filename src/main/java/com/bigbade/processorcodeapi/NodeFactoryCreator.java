@@ -1,8 +1,8 @@
 package com.bigbade.processorcodeapi;
 
-import com.bigbade.minecraftplugindevelopment.api.factories.INodeFactory;
-import com.bigbade.minecraftplugindevelopment.eclipse.EclipseNodeFactory;
-import com.bigbade.minecraftplugindevelopment.javac.factories.JavacNodeFactory;
+import com.bigbade.processorcodeapi.api.factories.INodeFactory;
+import com.bigbade.processorcodeapi.eclipse.EclipseNodeFactory;
+import com.bigbade.processorcodeapi.javac.factories.JavacNodeFactory;
 
 import javax.annotation.processing.ProcessingEnvironment;
 
