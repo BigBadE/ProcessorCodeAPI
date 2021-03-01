@@ -1,0 +1,8 @@
+rootProject.name = 'processorcodeapi'
+
+include(':eclipse')
+project(':eclipse').projectDir = file('eclipse')
+include(':javac')
+project(':javac').projectDir = file('javac')
+include(':core')
+project(':core').projectDir = file('core')

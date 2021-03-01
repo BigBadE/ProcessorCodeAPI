@@ -1,0 +1,10 @@
+import org.gradle.internal.jvm.Jvm
+
+dependencies {
+    //Only add if compiled on a version below Java 11
+    if(Jvm.current().toolsJar != null) {
+        shadow files(Jvm.current().toolsJar)
+    }
+
+    implementation project(":core")
+}
