@@ -62,10 +62,15 @@ task genJavadocs(type: Javadoc) {
     classpath = files(allprojects.collect {project -> project.sourceSets.main.compileClasspath })
 }
 
-publishToMavenLocal.dependsOn(genJavadocs)
+task javadocJar(type: Jar) {
+    from genJavadocs
+    archiveClassifier.set('javadoc')
+}
+
+publishToMavenLocal.dependsOn(javadocJar)
 
 artifacts {
-    genJavadocs
+    javadocJar
 }
 
 dependencies {
@@ -76,6 +81,10 @@ dependencies {
 
 subprojects {
     group 'com.bigbade.processorcodeapi'
+
+    java {
+        withJavadocJar()
+    }
 }
 
 shadowJar {
