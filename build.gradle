@@ -5,12 +5,6 @@ plugins {
     id 'io.freefair.lombok' version '5.3.0'
 }
 
-dependencies {
-    implementation project(':core')
-    implementation project(':javac')
-    implementation project(':eclipse')
-}
-
 allprojects {
     apply plugin: 'maven-publish'
     apply plugin: 'java'
@@ -26,9 +20,14 @@ allprojects {
         version = '1.18.16'
     }
 
+    javadoc {
+        dependsOn delombok
+        source = delombok
+        failOnError = false
+    }
+
     java {
         withSourcesJar()
-        withJavadocJar()
     }
 
     repositories {
@@ -58,10 +57,26 @@ allprojects {
     }
 }
 
+task genJavadocs(type: Javadoc) {
+    source allprojects.collect {project -> project.sourceSets.main.allJava }
+    classpath = files(allprojects.collect {project -> project.sourceSets.main.compileClasspath })
+}
+
+publishToMavenLocal.dependsOn(genJavadocs)
+
+artifacts {
+    genJavadocs
+}
+
+dependencies {
+    implementation project(':core')
+    implementation project(':javac')
+    implementation project(':eclipse')
+}
+
 subprojects {
     group 'com.bigbade.processorcodeapi'
 }
-build.finalizedBy(shadowJar)
 
 shadowJar {
     archiveClassifier.set('')
