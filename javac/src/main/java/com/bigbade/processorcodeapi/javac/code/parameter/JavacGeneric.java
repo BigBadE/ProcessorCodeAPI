@@ -2,7 +2,7 @@ package com.bigbade.processorcodeapi.javac.code.parameter;
 
 import com.bigbade.processorcodeapi.api.code.IAnnotation;
 import com.bigbade.processorcodeapi.api.code.IClassType;
-import com.bigbade.processorcodeapi.api.code.parameter.IGeneric;
+import com.bigbade.processorcodeapi.api.code.IGeneric;
 import com.bigbade.processorcodeapi.javac.code.JavacVersion;
 import com.bigbade.processorcodeapi.javac.utils.JavacInternals;
 import com.bigbade.processorcodeapi.javac.utils.ListUtils;

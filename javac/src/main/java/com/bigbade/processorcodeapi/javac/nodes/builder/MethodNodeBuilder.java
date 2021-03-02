@@ -3,7 +3,7 @@ package com.bigbade.processorcodeapi.javac.nodes.builder;
 import com.bigbade.processorcodeapi.api.code.IAnnotation;
 import com.bigbade.processorcodeapi.api.code.IClassType;
 import com.bigbade.processorcodeapi.api.code.ICodeBlock;
-import com.bigbade.processorcodeapi.api.code.parameter.IGeneric;
+import com.bigbade.processorcodeapi.api.code.IGeneric;
 import com.bigbade.processorcodeapi.api.code.parameter.IParameter;
 import com.bigbade.processorcodeapi.api.code.parameter.IParameterType;
 import com.bigbade.processorcodeapi.api.expressions.IBasicExpression;

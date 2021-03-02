@@ -64,10 +64,16 @@ allprojects {
             mavenLocal()
         }
     }
+
+    shadowJar {
+        archiveClassifier.set('')
+    }
 }
 
 task genJavadocs(type: Javadoc) {
-    source allprojects.collect {project -> project.sourceSets.main.allJava }
+    options.optionFiles << file('javadoc.options')
+    options.addStringOption("link", "https://docs.oracle.com/javase/8/docs/api/")
+    source allprojects.collect {project -> project.delombok }
     classpath = files(allprojects.collect {project -> project.sourceSets.main.compileClasspath })
 }
 
@@ -75,7 +81,6 @@ task javadocJar(type: Jar) {
     from genJavadocs
     archiveClassifier.set('javadoc')
 }
-
 
 artifacts {
     archives javadocJar

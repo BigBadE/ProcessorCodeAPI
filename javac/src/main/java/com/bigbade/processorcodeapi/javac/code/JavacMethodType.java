@@ -8,14 +8,15 @@ import com.bigbade.processorcodeapi.javac.utils.JavacInternals;
 import com.sun.tools.javac.code.Type;
 import com.sun.tools.javac.tree.JCTree;
 
-import javax.annotation.Nullable;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ExecutableElement;
+import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @SuppressWarnings("unused")
 public class JavacMethodType implements IMethodType, JavacVersion<JCTree.JCIdent> {
@@ -23,16 +24,16 @@ public class JavacMethodType implements IMethodType, JavacVersion<JCTree.JCIdent
     private IClassType classType = null;
     private IParameterType[] params = new IParameterType[0];
     private IParameterType returnType = null;
+    private Set<Modifier> modifiers = null;
     private ExecutableElement element = null;
 
     public JavacMethodType(IClassType classType, String methodName,
-                           @Nullable IParameterType returnType, IParameterType... params) {
+                           IParameterType returnType, Set<Modifier> modifiers, IParameterType... params) {
         this.returnType = returnType;
         this.methodName = methodName;
         this.classType = classType;
-        if(params.length > 0) {
-            this.params = params;
-        }
+        this.modifiers = modifiers;
+        this.params = params;
     }
 
     public JavacMethodType(ExecutableElement element) {
@@ -74,7 +75,18 @@ public class JavacMethodType implements IMethodType, JavacVersion<JCTree.JCIdent
                     i++;
                 }
 
+                if(method.getModifiers().size() != modifiers.size()) {
+                    found = false;
+                } else {
+                    for(Modifier modifier : modifiers) {
+                        if(!method.getModifiers().contains(modifier)) {
+                            found = false;
+                            break;
+                        }
+                    }
+                }
                 if (found) {
+                    this.element = method;
                     return Optional.of(method);
                 }
             }

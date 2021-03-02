@@ -13,5 +13,4 @@ public interface IMethodNode {
      * @return Element of the method
      */
     ExecutableElement getMethodElement();
-
 }

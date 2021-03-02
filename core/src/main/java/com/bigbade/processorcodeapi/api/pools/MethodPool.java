@@ -1,6 +1,5 @@
 package com.bigbade.processorcodeapi.api.pools;
 
-import com.bigbade.processorcodeapi.api.PoolableObject;
 import com.bigbade.processorcodeapi.api.nodes.IMethodNode;
 
 import javax.lang.model.element.ExecutableElement;

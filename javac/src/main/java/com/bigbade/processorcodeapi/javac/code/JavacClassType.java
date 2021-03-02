@@ -7,7 +7,9 @@ import com.bigbade.processorcodeapi.javac.utils.JavacInternals;
 import com.sun.tools.javac.tree.JCTree;
 
 import javax.lang.model.element.ExecutableElement;
+import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 public class JavacClassType implements IClassType, JavacVersion<JCTree.JCIdent> {
@@ -60,8 +62,9 @@ public class JavacClassType implements IClassType, JavacVersion<JCTree.JCIdent> 
     }
 
     @Override
-    public IMethodType getMethod(String name, IParameterType returnType, IParameterType... params) {
-        return new JavacMethodType(this, name, returnType, params);
+    public IMethodType getMethod(String name, IParameterType returnType, Set<Modifier> modifiers,
+                                 IParameterType... params) {
+        return new JavacMethodType(this, name, returnType, modifiers, params);
     }
 
     @Override

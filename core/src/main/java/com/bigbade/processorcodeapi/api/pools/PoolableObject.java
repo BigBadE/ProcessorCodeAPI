@@ -1,4 +1,4 @@
-package com.bigbade.processorcodeapi.api;
+package com.bigbade.processorcodeapi.api.pools;
 
 import java.util.HashMap;
 import java.util.Map;

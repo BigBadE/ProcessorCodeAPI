@@ -8,6 +8,10 @@ import com.bigbade.processorcodeapi.api.code.parameter.IParameterType;
 import com.bigbade.processorcodeapi.api.expressions.ILiteralExpression;
 import com.bigbade.processorcodeapi.api.nodes.IMethodNode;
 
+/**
+ * A builder for creating/editing a method node, must be built for changes to be reflected in the
+ * compiled code.
+ */
 @SuppressWarnings("unused")
 public interface IMethodNodeBuilder {
     /**

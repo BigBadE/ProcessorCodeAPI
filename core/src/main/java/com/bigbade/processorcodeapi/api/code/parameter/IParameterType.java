@@ -1,10 +1,17 @@
 package com.bigbade.processorcodeapi.api.code.parameter;
 
 import com.bigbade.processorcodeapi.api.code.IClassType;
+import com.bigbade.processorcodeapi.api.code.IMethodType;
+import com.bigbade.processorcodeapi.api.expressions.IBasicExpression;
 
 import javax.lang.model.element.Element;
 import javax.lang.model.type.TypeMirror;
 
+/**
+ * Any bounds to generic types (for now) are instead passed to the method call generator.
+ *
+ * @see com.bigbade.processorcodeapi.api.factories.ICodeFactory#createReference(IClassType[], IMethodType, IBasicExpression...)
+ */
 public interface IParameterType {
     /**
      * Checks if the type is an exact match.

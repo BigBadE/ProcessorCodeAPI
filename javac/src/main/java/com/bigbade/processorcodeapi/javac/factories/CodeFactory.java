@@ -5,8 +5,8 @@ import com.bigbade.processorcodeapi.api.code.IMethodType;
 import com.bigbade.processorcodeapi.api.expressions.IAssignmentExpression;
 import com.bigbade.processorcodeapi.api.expressions.IBasicExpression;
 import com.bigbade.processorcodeapi.api.expressions.IExpressionReference;
-import com.bigbade.processorcodeapi.api.expressions.ILiteralExpression;
 import com.bigbade.processorcodeapi.api.expressions.IGetVariableExpression;
+import com.bigbade.processorcodeapi.api.expressions.ILiteralExpression;
 import com.bigbade.processorcodeapi.api.expressions.INewInstanceExpression;
 import com.bigbade.processorcodeapi.api.expressions.ISelectVariableExpression;
 import com.bigbade.processorcodeapi.api.expressions.IThisExpression;
@@ -16,24 +16,27 @@ import com.bigbade.processorcodeapi.api.statements.ICallStatement;
 import com.bigbade.processorcodeapi.api.statements.IIfStatement;
 import com.bigbade.processorcodeapi.javac.expressions.AssignmentExpression;
 import com.bigbade.processorcodeapi.javac.expressions.ExpressionReference;
-import com.bigbade.processorcodeapi.javac.expressions.NewInstanceExpression;
-import com.bigbade.processorcodeapi.javac.expressions.SelectVariableExpression;
+import com.bigbade.processorcodeapi.javac.expressions.GetVariableExpression;
 import com.bigbade.processorcodeapi.javac.expressions.IJavacExpression;
 import com.bigbade.processorcodeapi.javac.expressions.LiteralExpression;
-import com.bigbade.processorcodeapi.javac.expressions.GetVariableExpression;
+import com.bigbade.processorcodeapi.javac.expressions.NewInstanceExpression;
+import com.bigbade.processorcodeapi.javac.expressions.SelectVariableExpression;
 import com.bigbade.processorcodeapi.javac.expressions.ThisExpression;
 import com.bigbade.processorcodeapi.javac.statements.CallStatement;
 import com.bigbade.processorcodeapi.javac.statements.IJavacStatement;
 import com.bigbade.processorcodeapi.javac.statements.IfStatement;
-import com.sun.tools.javac.tree.JCTree;
 
 import javax.annotation.Nullable;
 
 public class CodeFactory implements ICodeFactory {
-    @SuppressWarnings("unchecked")
     @Override
     public IAssignmentExpression createAssignment(ISelectVariableExpression variable, IBasicExpression value) {
-        return new AssignmentExpression(variable, (IJavacExpression<JCTree.JCIdent>) value);
+        return new AssignmentExpression((IJavacExpression<?>) variable, (IJavacExpression<?>) value);
+    }
+
+    @Override
+    public IAssignmentExpression createAssignment(IGetVariableExpression variable, IBasicExpression value) {
+        return new AssignmentExpression((IJavacExpression<?>) variable, (IJavacExpression<?>) value);
     }
 
     @Override
@@ -52,7 +55,7 @@ public class CodeFactory implements ICodeFactory {
     }
 
     @Override
-    public IExpressionReference createReference(@Nullable IClassType[] generics, IBasicExpression method,
+    public IExpressionReference createReference(@Nullable IClassType[] generics, IGetVariableExpression method,
                                                 IBasicExpression... params) {
         return new ExpressionReference(generics, method, params);
     }

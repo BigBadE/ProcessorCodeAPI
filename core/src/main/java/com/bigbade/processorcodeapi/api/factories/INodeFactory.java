@@ -54,6 +54,10 @@ public interface INodeFactory {
      */
     IMethodNode getMethodNode(ExecutableElement element);
 
+    /**
+     * Gets the TypeUtils instance
+     * @return Current TypeUtils instance
+     */
     TypeUtils getTypeUtils();
 
     /**

@@ -38,9 +38,9 @@ public class JavacTypeUtils implements TypeUtils {
         return ((Symbol.TypeSymbol) first).getQualifiedName().equals(((Symbol.TypeSymbol) second).getQualifiedName());
     }
 
+    @Override
     public boolean typeEquals(TypeMirror first, TypeMirror second) {
-        return ((Type.ClassType) first).asElement().getQualifiedName()
-                .equals(((Type) second).asElement().getQualifiedName());
+        return typeEquals(((Type) first).asElement(), ((Type) second).asElement());
     }
 
     @Override
