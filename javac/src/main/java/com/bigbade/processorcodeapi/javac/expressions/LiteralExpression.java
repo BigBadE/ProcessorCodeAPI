@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class LiteralExpression<T> implements ILiteralExpression<T>, IJavacExpression<JCTree.JCLiteral> {
-
     private final T literal;
 
     @Override

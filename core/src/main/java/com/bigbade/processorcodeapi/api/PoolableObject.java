@@ -1,7 +1,5 @@
 package com.bigbade.processorcodeapi.api;
 
-import lombok.RequiredArgsConstructor;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,7 +9,6 @@ import java.util.Map;
  * @param <K> Key used to instantiate K. Usually the compiler-specific implementation
  * @param <V> Value instantiated by the key. Usually the interface for the API
  */
-@RequiredArgsConstructor
 public abstract class PoolableObject<K, V> {
     private final Map<K, V> pool = new HashMap<>();
 

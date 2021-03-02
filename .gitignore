@@ -7,6 +7,3 @@ build
 core/build
 eclipse/build
 javac/build
-
-#Ignore lombok config file
-lombok.config

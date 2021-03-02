@@ -13,6 +13,8 @@ allprojects {
 
     version '1.0.0'
 
+    generateLombokConfig.enabled = false
+
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
 
@@ -26,8 +28,15 @@ allprojects {
         failOnError = false
     }
 
-    java {
-        withSourcesJar()
+    task sourcesJar(type: Jar) {
+        dependsOn delombok
+        from delombok
+        archiveClassifier.set('sources')
+    }
+
+
+    artifacts {
+        archives sourcesJar
     }
 
     repositories {
@@ -67,10 +76,9 @@ task javadocJar(type: Jar) {
     archiveClassifier.set('javadoc')
 }
 
-publishToMavenLocal.dependsOn(javadocJar)
 
 artifacts {
-    javadocJar
+    archives javadocJar
 }
 
 dependencies {
