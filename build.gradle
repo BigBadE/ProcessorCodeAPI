@@ -70,22 +70,6 @@ allprojects {
     }
 }
 
-task genJavadocs(type: Javadoc) {
-    options.optionFiles << file('javadoc.options')
-    options.addStringOption("link", "https://docs.oracle.com/javase/8/docs/api/")
-    source allprojects.collect {project -> project.delombok }
-    classpath = files(allprojects.collect {project -> project.sourceSets.main.compileClasspath })
-}
-
-task javadocJar(type: Jar) {
-    from genJavadocs
-    archiveClassifier.set('javadoc')
-}
-
-artifacts {
-    archives javadocJar
-}
-
 dependencies {
     implementation project(':core')
     implementation project(':javac')
@@ -94,10 +78,10 @@ dependencies {
 
 subprojects {
     group 'com.bigbade.processorcodeapi'
+}
 
-    java {
-        withJavadocJar()
-    }
+java {
+    withJavadocJar()
 }
 
 shadowJar {

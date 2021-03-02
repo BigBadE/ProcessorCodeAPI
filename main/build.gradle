@@ -1,0 +1,18 @@
+dependencies {
+    implementation project(':core')
+    implementation project(':javac')
+    implementation project(':eclipse')
+}
+
+task genJavadocs(type: Javadoc) {
+    options.addStringOption("link", "https://docs.oracle.com/javase/8/docs/api/")
+    source parent.allprojects.collect {project -> project.delombok }
+    classpath = files(parent.allprojects.collect {project -> project.sourceSets.main.compileClasspath })
+}
+
+task javadocJar(type: Jar, dependsOn: build) {
+    from genJavadocs
+    archiveClassifier.set('javadoc')
+}
+
+build.finalizedBy(javadocJar)
