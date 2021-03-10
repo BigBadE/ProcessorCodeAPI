@@ -34,7 +34,6 @@ allprojects {
         archiveClassifier.set('sources')
     }
 
-
     artifacts {
         archives sourcesJar
     }

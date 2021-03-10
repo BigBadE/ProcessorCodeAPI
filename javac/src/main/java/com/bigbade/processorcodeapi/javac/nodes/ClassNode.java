@@ -91,10 +91,12 @@ public class ClassNode implements IClassNode {
         String clazz = type.getQualifiedName();
         JCTree.JCCompilationUnit tree = (JCTree.JCCompilationUnit) internals.getTrees().getPath(classElement).getCompilationUnit();
 
+        int last = clazz.lastIndexOf(".");
         tree.defs = ListUtils.prependObjectToSunList(tree.defs, internals.getTreeMaker().Import(
-                internals.getTreeMaker().Select(
+                last == -1 ? internals.getTreeMaker().Select(null, internals.getNames().fromString(clazz))
+                        : internals.getTreeMaker().Select(
                         internals.getTreeMaker().Ident(internals.getNames().fromString(clazz.substring(0,
-                                clazz.lastIndexOf(".")))),
+                                last))),
                         internals.getNames().fromString(clazz.substring(clazz.lastIndexOf(".") + 1))), false));
     }
 
@@ -175,5 +177,18 @@ public class ClassNode implements IClassNode {
         }
         classDecl.defs = ListUtils.addObjectToSunList(classDecl.defs, methodDecl);
         return methodPool.getObject(methodDecl.sym);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(!(obj instanceof ClassNode)) {
+            return false;
+        }
+        return classElement.getQualifiedName().equals(((ClassNode) obj).classElement.getQualifiedName());
+    }
+
+    @Override
+    public int hashCode() {
+        return classElement.getQualifiedName().hashCode();
     }
 }
