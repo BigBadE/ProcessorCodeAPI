@@ -8,8 +8,6 @@ import javax.lang.model.element.Element;
 import javax.lang.model.type.TypeMirror;
 
 /**
- * Any bounds to generic types (for now) are instead passed to the method call generator.
- *
  * @see com.bigbade.processorcodeapi.api.factories.ICodeFactory#createReference(IClassType[], IMethodType, IBasicExpression...)
  */
 public interface IParameterType {

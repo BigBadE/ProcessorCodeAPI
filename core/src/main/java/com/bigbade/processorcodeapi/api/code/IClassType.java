@@ -3,9 +3,7 @@ package com.bigbade.processorcodeapi.api.code;
 import com.bigbade.processorcodeapi.api.code.parameter.IParameterType;
 
 import javax.lang.model.element.ExecutableElement;
-import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
-import java.util.Set;
 
 /**
  * Represents a class type in memory. Used over qualified names or elements because class types can be
@@ -38,8 +36,9 @@ public interface IClassType {
      * @param modifiers Modifiers of the method
      * @param params Parameters of the method
      * @return Found method type
+     * @see java.lang.reflect.Modifier
      */
-    IMethodType getMethod(String name, IParameterType returnType, Set<Modifier> modifiers, IParameterType... params);
+    IMethodType getMethod(String name, IParameterType returnType, Integer modifiers, IParameterType... params);
 
     /**
      * Gets the method type from an ExecutableElement

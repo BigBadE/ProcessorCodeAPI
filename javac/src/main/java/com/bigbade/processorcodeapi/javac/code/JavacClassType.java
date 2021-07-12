@@ -62,7 +62,7 @@ public class JavacClassType implements IClassType, JavacVersion<JCTree.JCIdent> 
     }
 
     @Override
-    public IMethodType getMethod(String name, IParameterType returnType, Set<Modifier> modifiers,
+    public IMethodType getMethod(String name, IParameterType returnType, Integer modifiers,
                                  IParameterType... params) {
         return new JavacMethodType(this, name, returnType, modifiers, params);
     }

@@ -11,7 +11,7 @@ allprojects {
     apply plugin: 'io.freefair.lombok'
     apply plugin: 'com.github.johnrengelman.shadow'
 
-    version '1.0.0'
+    version '1.0.1'
 
     generateLombokConfig.enabled = false
 
@@ -70,9 +70,7 @@ allprojects {
 }
 
 dependencies {
-    implementation project(':core')
-    implementation project(':javac')
-    implementation project(':eclipse')
+    implementation project(':main')
 }
 
 subprojects {
