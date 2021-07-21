@@ -6,6 +6,7 @@ import com.sun.tools.javac.tree.JCTree;
 import com.sun.tools.javac.util.List;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 public final class ListUtils {
     private ListUtils() {}
@@ -90,9 +91,9 @@ public final class ListUtils {
      */
     @SuppressWarnings("unchecked")
     public static <T extends JCTree> List<T> convertJavacVersions(JavacInternals internals,
-                                                                  java.util.List<?> converting) {
+                                                                  Collection<?> converting) {
         java.util.List<T> found = new ArrayList<>();
-        for(JavacVersion<T> version : (List<JavacVersion<T>>) converting) {
+        for(JavacVersion<T> version : (Collection<JavacVersion<T>>) converting) {
             found.add(version.getExpression(internals));
         }
         return convertList(found);

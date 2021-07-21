@@ -7,26 +7,39 @@ import com.bigbade.processorcodeapi.javac.utils.JavacInternals;
 import com.sun.tools.javac.tree.JCTree;
 
 import javax.lang.model.element.ExecutableElement;
-import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
-import java.util.Set;
 import java.util.regex.Pattern;
 
-public class JavacClassType implements IClassType, JavacVersion<JCTree.JCIdent> {
+public class JavacClassType implements IClassType, JavacVersion<JCTree.JCExpression> {
     private static final Pattern PACKAGE_PATTERN = Pattern.compile("\\.");
 
     private final JavacInternals internals;
+    private final int dimensions;
     private String qualifiedName;
     private TypeElement element;
 
-    public JavacClassType(JavacInternals internals, String qualifiedName) {
+    public JavacClassType(JavacInternals internals, String qualifiedName, int dimensions) {
         this.qualifiedName = qualifiedName;
         this.internals = internals;
+        this.dimensions = dimensions;
     }
 
-    public JavacClassType(JavacInternals internals, TypeElement element) {
+    public JavacClassType(JavacInternals internals, TypeElement element, int dimensions) {
         this.element = element;
         this.internals = internals;
+        this.dimensions = dimensions;
+    }
+
+    public JavacClassType(JavacInternals internals, JCTree.JCExpression expression) {
+        JCTree.JCExpression found = expression;
+        int foundDimensions = 0;
+        while (found instanceof JCTree.JCArrayTypeTree) {
+            foundDimensions++;
+            found = ((JCTree.JCArrayTypeTree)expression).elemtype;
+        }
+        this.qualifiedName = ((JCTree.JCIdent) found).name.toString();
+        this.internals = internals;
+        this.dimensions = foundDimensions;
     }
 
     @Override
@@ -73,7 +86,12 @@ public class JavacClassType implements IClassType, JavacVersion<JCTree.JCIdent> 
     }
 
     @Override
-    public JCTree.JCIdent getExpression(JavacInternals internals) {
-        return internals.getTreeMaker().Ident(internals.getNames().fromString(getSimpleName()));
+    public JCTree.JCExpression getExpression(JavacInternals internals) {
+        JCTree.JCExpression expression = internals.getTreeMaker().Ident(internals.getNames().fromString(getQualifiedName()));
+        int currentDimension = dimensions;
+        while (currentDimension-- > 0) {
+            expression = internals.getTreeMaker().TypeArray(expression);
+        }
+        return expression;
     }
 }

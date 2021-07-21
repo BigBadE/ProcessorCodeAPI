@@ -3,12 +3,13 @@ package com.bigbade.processorcodeapi.api.code.parameter;
 import com.bigbade.processorcodeapi.api.code.IClassType;
 import com.bigbade.processorcodeapi.api.code.IMethodType;
 import com.bigbade.processorcodeapi.api.expressions.IBasicExpression;
+import com.bigbade.processorcodeapi.api.factories.IExpressionFactory;
 
 import javax.lang.model.element.Element;
 import javax.lang.model.type.TypeMirror;
 
 /**
- * @see com.bigbade.processorcodeapi.api.factories.ICodeFactory#createReference(IClassType[], IMethodType, IBasicExpression...)
+ * @see IExpressionFactory#createReference(IClassType[], IMethodType, IBasicExpression...)
  */
 public interface IParameterType {
     /**

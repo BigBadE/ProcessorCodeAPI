@@ -14,9 +14,9 @@ import javax.annotation.Nullable;
 import javax.lang.model.element.Element;
 import javax.lang.model.type.TypeMirror;
 
+@Getter
 @RequiredArgsConstructor
 public class JavacParameterType implements JavacVersion<JCTree.JCIdent>, IParameterType {
-    @Getter
     @Nullable
     private final IClassType type;
 

@@ -13,34 +13,16 @@ allprojects {
 
     version '1.0.1'
 
+    sourceCompatibility = targetCompatibility = 8
+
     generateLombokConfig.enabled = false
 
-    sourceCompatibility = 1.8
-    targetCompatibility = 1.8
-
     lombok {
-        version = '1.18.16'
-    }
-
-    javadoc {
-        dependsOn delombok
-        source = delombok
-        failOnError = false
-    }
-
-    task sourcesJar(type: Jar) {
-        dependsOn delombok
-        from delombok
-        archiveClassifier.set('sources')
-    }
-
-    artifacts {
-        archives sourcesJar
+        version = '1.18.20'
     }
 
     repositories {
         mavenCentral()
-        jcenter()
     }
 
     dependencies {
@@ -69,16 +51,45 @@ allprojects {
     }
 }
 
+task genJavadocs(type: Javadoc) {
+    options.source = "8"
+    options.addStringOption("link", "https://docs.oracle.com/javase/8/docs/api/")
+    Project[] projects = [project(':core'), project]
+    source projects.collect { project -> project.delombok }
+    classpath = files(projects.collect { project -> project.sourceSets.main.compileClasspath })
+}
+
+javadoc {
+    dependsOn delombok
+    source = delombok
+    failOnError = false
+}
+
+task javadocJar(type: Jar, dependsOn: build) {
+    from genJavadocs
+    archiveClassifier.set('javadoc')
+}
+
+build.finalizedBy(javadocJar)
+
+task sourcesJar(type: Jar) {
+    dependsOn delombok
+    from delombok
+    archiveClassifier.set('sources')
+}
+
+artifacts {
+    archives sourcesJar
+}
+
 dependencies {
-    implementation project(':main')
+    implementation project(':core')
+    implementation project(':javac')
+    implementation project(':eclipse')
 }
 
 subprojects {
     group 'com.bigbade.processorcodeapi'
-}
-
-java {
-    withJavadocJar()
 }
 
 shadowJar {

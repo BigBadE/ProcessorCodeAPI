@@ -4,6 +4,7 @@ import com.bigbade.processorcodeapi.api.code.IClassType;
 import com.bigbade.processorcodeapi.api.expressions.IBasicExpression;
 import com.bigbade.processorcodeapi.api.expressions.INewInstanceExpression;
 import com.bigbade.processorcodeapi.javac.code.JavacClassType;
+import com.bigbade.processorcodeapi.javac.utils.InternalWrapperCreator;
 import com.bigbade.processorcodeapi.javac.utils.JavacInternals;
 import com.bigbade.processorcodeapi.javac.utils.ListUtils;
 import com.sun.tools.javac.tree.JCTree;
@@ -21,6 +22,19 @@ public class NewInstanceExpression implements INewInstanceExpression, IJavacExpr
         this.genericTypes = generics;
         this.clazz = clazz;
         this.params = Arrays.copyOf(params, params.length, IJavacExpression[].class);
+    }
+
+    public NewInstanceExpression(JavacInternals internals, JCTree.JCNewClass newClass) {
+        this.genericTypes = new IClassType[newClass.typeargs.size()];
+        for(int i = 0; i < genericTypes.length; i++) {
+            genericTypes[i] = new JavacClassType(internals, (JCTree.JCIdent) newClass.typeargs.get(i));
+        }
+        this.clazz = new JavacClassType(internals, (JCTree.JCIdent) newClass.clazz);
+
+        this.params = new IJavacExpression[newClass.args.size()];
+        for(int i = 0; i < genericTypes.length; i++) {
+            params[i] = InternalWrapperCreator.getExpressionFromClass(internals, newClass.args.get(i));
+        }
     }
 
     @Override

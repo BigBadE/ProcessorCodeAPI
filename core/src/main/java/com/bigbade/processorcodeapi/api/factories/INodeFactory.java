@@ -67,10 +67,16 @@ public interface INodeFactory {
     ICodeBlock getCodeBlock();
 
     /**
-     * Returns a factory to create code blocks
-     * @return Code factory
+     * Returns a factory to create instructions to be passed to statements
+     * @return Expression factory
      */
-    ICodeFactory getCodeFactory();
+    IExpressionFactory getExpressionFactory();
+
+    /**
+     * Returns a factory to create instructions for code blocks
+     * @return Statement factory
+     */
+    IStatementFactory getStatementFactory();
 
     /**
      * Returns a class type from the name
@@ -80,9 +86,25 @@ public interface INodeFactory {
     IClassType getClassType(String qualifiedName);
 
     /**
+     * Returns a class type from the name with the given dimensions
+     * @param qualifiedName Qualified name of class
+     * @param dimensions Array dimensions. Default is 0
+     * @return Class type of given qualified name
+     */
+    IClassType getClassType(String qualifiedName, int dimensions);
+
+    /**
      * Returns a class type from the element
      * @param element Element to get type of
      * @return Class type of given element
      */
     IClassType getClassType(TypeElement element);
+
+    /**
+     * Returns a class type from the element
+     * @param element Element to get type of
+     * @param dimensions Array dimensions. Default is 0
+     * @return Class type of given element
+     */
+    IClassType getClassType(TypeElement element, int dimensions);
 }

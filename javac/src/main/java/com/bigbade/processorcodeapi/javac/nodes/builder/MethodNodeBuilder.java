@@ -217,7 +217,7 @@ public class MethodNodeBuilder implements IMethodNodeBuilder {
         JCTree.JCMethodDecl methodDecl = treeMaker.MethodDef(getModifiers(treeMaker),
                 node.getInternals().getNames().fromString(name),
                 returnType, ListUtils.convertList(genericTypes), ListUtils.convertList(typeDecls),
-                ListUtils.convertList(new ArrayList<>(thrown)), codeBlock.getBlock(),
+                ListUtils.convertList(new ArrayList<>(thrown)), codeBlock.getExpression(node.getInternals()),
                 defaultValue == null ? null : defaultValue.getExpression(node.getInternals()));
         methodDecl.sym = new Symbol.MethodSymbol(modifier, node.getInternals().getNames().fromString(name), null,
                 (Symbol.ClassSymbol) node.getClassElement());

@@ -11,6 +11,9 @@ import lombok.RequiredArgsConstructor;
 public class CallStatement implements ICallStatement, IJavacStatement<JCTree.JCExpressionStatement> {
     private final IExpressionReference reference;
 
+    public CallStatement(JavacInternals internals, JCTree.JCExpressionStatement statement) {
+        reference = new ExpressionReference(internals, (JCTree.JCMethodInvocation) statement.getExpression());
+    }
     @Override
     public JCTree.JCExpressionStatement getExpression(JavacInternals internals) {
         return internals.getTreeMaker().Exec(((ExpressionReference) reference).getExpression(internals));

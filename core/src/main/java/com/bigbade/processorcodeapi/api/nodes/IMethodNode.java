@@ -1,5 +1,7 @@
 package com.bigbade.processorcodeapi.api.nodes;
 
+import com.bigbade.processorcodeapi.api.code.ICodeBlock;
+
 import javax.lang.model.element.ExecutableElement;
 
 /**
@@ -13,4 +15,10 @@ public interface IMethodNode {
      * @return Element of the method
      */
     ExecutableElement getMethodElement();
+
+    /**
+     * The code block of the method
+     * @return Code block
+     */
+    ICodeBlock getCodeBlock();
 }

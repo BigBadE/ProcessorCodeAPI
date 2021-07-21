@@ -10,6 +10,8 @@ import com.sun.tools.javac.tree.JCTree;
 import com.sun.tools.javac.tree.TreeMaker;
 import lombok.Getter;
 
+import java.util.Arrays;
+
 public class Parameter implements IParameter, JavacVersion<JCTree.JCVariableDecl> {
     @Getter
     private final IParameterType type;
@@ -28,10 +30,16 @@ public class Parameter implements IParameter, JavacVersion<JCTree.JCVariableDecl
     @Override
     public JCTree.JCVariableDecl getExpression(JavacInternals internals) {
         TreeMaker treeMaker = internals.getTreeMaker();
+
+        JCTree.JCExpression variableType = treeMaker.Ident(
+                internals.getNames().fromString(type.getSimpleName()));
+        if(annotations.length > 0) {
+            variableType = treeMaker.AnnotatedType(
+                    ListUtils.convertJavacVersions(internals, Arrays.asList(annotations)), variableType);
+        }
         return treeMaker.VarDef(internals.getTreeMaker().Modifiers(0,
                 ListUtils.convertJavacVersions(internals, (JavacVersion<JCTree.JCAnnotation>[]) annotations)),
-                internals.getNames().fromString(name), treeMaker.Ident(
-                        internals.getNames().fromString(type.getSimpleName())),
+                internals.getNames().fromString(name), variableType,
                 null);
     }
 }

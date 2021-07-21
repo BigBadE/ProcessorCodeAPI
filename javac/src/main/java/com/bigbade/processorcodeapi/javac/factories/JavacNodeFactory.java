@@ -4,8 +4,9 @@ import com.bigbade.processorcodeapi.api.TypeUtils;
 import com.bigbade.processorcodeapi.api.code.IClassType;
 import com.bigbade.processorcodeapi.api.code.ICodeBlock;
 import com.bigbade.processorcodeapi.api.code.parameter.IParameterType;
-import com.bigbade.processorcodeapi.api.factories.ICodeFactory;
+import com.bigbade.processorcodeapi.api.factories.IExpressionFactory;
 import com.bigbade.processorcodeapi.api.factories.INodeFactory;
+import com.bigbade.processorcodeapi.api.factories.IStatementFactory;
 import com.bigbade.processorcodeapi.api.nodes.IClassNode;
 import com.bigbade.processorcodeapi.api.nodes.IMethodNode;
 import com.bigbade.processorcodeapi.javac.code.JavacClassType;
@@ -72,25 +73,39 @@ public final class JavacNodeFactory implements INodeFactory {
         return typeUtils;
     }
 
-
     @Override
     public ICodeBlock getCodeBlock() {
         return new JavacCodeBlock(internals);
     }
 
     @Override
-    public ICodeFactory getCodeFactory() {
-        return new CodeFactory();
+    public IExpressionFactory getExpressionFactory() {
+        return new ExpressionFactory();
+    }
+
+    @Override
+    public IStatementFactory getStatementFactory() {
+        return new StatementFactory();
     }
 
     @Override
     public IClassType getClassType(String qualifiedName) {
-        return new JavacClassType(internals, qualifiedName);
+        return new JavacClassType(internals, qualifiedName, 0);
+    }
+
+    @Override
+    public IClassType getClassType(String qualifiedName, int dimensions) {
+        return new JavacClassType(internals, qualifiedName, dimensions);
     }
 
     @Override
     public IClassType getClassType(TypeElement element) {
-        return new JavacClassType(internals, element);
+        return new JavacClassType(internals, element, 0);
+    }
+
+    @Override
+    public IClassType getClassType(TypeElement element, int dimensions) {
+        return new JavacClassType(internals, element, dimensions);
     }
 
     @Override

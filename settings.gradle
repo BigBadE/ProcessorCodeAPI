@@ -6,6 +6,4 @@ include(':javac')
 project(':javac').projectDir = file('javac')
 include(':core')
 project(':core').projectDir = file('core')
-include(':main')
-project(':main').projectDir = file('main')
 

@@ -5,29 +5,25 @@ import com.bigbade.processorcodeapi.api.code.IMethodType;
 import com.bigbade.processorcodeapi.api.expressions.IAssignmentExpression;
 import com.bigbade.processorcodeapi.api.expressions.IBasicExpression;
 import com.bigbade.processorcodeapi.api.expressions.IExpressionReference;
-import com.bigbade.processorcodeapi.api.expressions.ILiteralExpression;
 import com.bigbade.processorcodeapi.api.expressions.IGetVariableExpression;
+import com.bigbade.processorcodeapi.api.expressions.ILiteralExpression;
 import com.bigbade.processorcodeapi.api.expressions.INewInstanceExpression;
-import com.bigbade.processorcodeapi.api.expressions.ISelectVariableExpression;
-import com.bigbade.processorcodeapi.api.expressions.IThisExpression;
-import com.bigbade.processorcodeapi.api.statements.IBasicStatement;
-import com.bigbade.processorcodeapi.api.statements.ICallStatement;
-import com.bigbade.processorcodeapi.api.statements.IIfStatement;
+import com.bigbade.processorcodeapi.api.expressions.ISelectExpression;
 
 import javax.annotation.Nullable;
 
 /**
- * A factory class to create code to be inserted into code blocks.
+ * A factory class to create code with return values for use in statements.
  */
 @SuppressWarnings("unused")
-public interface ICodeFactory {
+public interface IExpressionFactory {
     /**
      * Assigns the value to the variable
      * @param variable Name of variable to assign to
      * @param value Value to assign to variable
      * @return Assignment expression with given params
      */
-    IAssignmentExpression createAssignment(ISelectVariableExpression variable, IBasicExpression value);
+    IAssignmentExpression createAssignment(ISelectExpression variable, IBasicExpression value);
 
     /**
      * Assigns the value to the variable
@@ -50,7 +46,7 @@ public interface ICodeFactory {
      * @param name Name of the variable
      * @return Select expression to get the variable of that name
      */
-    ISelectVariableExpression selectVariable(String name);
+    ISelectExpression selectVariable(String name);
 
     /**
      * Creates a reference to a specific method in the current class (or statically imported),
@@ -75,13 +71,6 @@ public interface ICodeFactory {
                                          IBasicExpression... params);
 
     /**
-     * Calls the expression referenced
-     * @param reference Reference to call
-     * @return Call statement
-     */
-    ICallStatement callReference(IExpressionReference reference);
-
-    /**
      * Gets a field (or method) from the object returned by the expression.
      * @param variable Expression to get the field/method from
      * @param name Name of field/method
@@ -103,7 +92,7 @@ public interface ICodeFactory {
      * @param thisType Class type to get "this" reference from
      * @return Reference to "this" type
      */
-    IThisExpression thisReference(IClassType thisType);
+    ISelectExpression thisReference(IClassType thisType);
 
     /**
      * Instantiates the class given the generic types and parameters. Does not need a reference to a specific
@@ -114,13 +103,4 @@ public interface ICodeFactory {
      * @return Expression to create a new instance of the class.
      */
     INewInstanceExpression instantiateClass(@Nullable IClassType[] generics, IClassType clazz, IBasicExpression... params);
-
-    /**
-     * Creates an if statement, taking the condition and if true calling ifPassed, if false calling ifFailed.
-     * @param condition Condition, should evaluate to boolean "true" or "false"
-     * @param ifPassed Statement to be called if the condition is true
-     * @param ifFailed Statement to be called if the condition is false
-     * @return If statement with the given parameters.
-     */
-    IIfStatement createIfStatement(IBasicExpression condition, IBasicStatement ifPassed, IBasicStatement ifFailed);
 }

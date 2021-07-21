@@ -6,6 +6,10 @@ import com.bigbade.processorcodeapi.javac.factories.JavacNodeFactory;
 
 import javax.annotation.processing.ProcessingEnvironment;
 
+/**
+ * The entry point into the ProcessorCodeAPI.
+ * Returns the correct factory for the development environment.
+ */
 @SuppressWarnings("unused")
 public final class NodeFactoryCreator {
     private static INodeFactory factory = null;

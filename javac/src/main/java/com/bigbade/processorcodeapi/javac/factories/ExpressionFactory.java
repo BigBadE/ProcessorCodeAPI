@@ -8,12 +8,8 @@ import com.bigbade.processorcodeapi.api.expressions.IExpressionReference;
 import com.bigbade.processorcodeapi.api.expressions.IGetVariableExpression;
 import com.bigbade.processorcodeapi.api.expressions.ILiteralExpression;
 import com.bigbade.processorcodeapi.api.expressions.INewInstanceExpression;
-import com.bigbade.processorcodeapi.api.expressions.ISelectVariableExpression;
-import com.bigbade.processorcodeapi.api.expressions.IThisExpression;
-import com.bigbade.processorcodeapi.api.factories.ICodeFactory;
-import com.bigbade.processorcodeapi.api.statements.IBasicStatement;
-import com.bigbade.processorcodeapi.api.statements.ICallStatement;
-import com.bigbade.processorcodeapi.api.statements.IIfStatement;
+import com.bigbade.processorcodeapi.api.expressions.ISelectExpression;
+import com.bigbade.processorcodeapi.api.factories.IExpressionFactory;
 import com.bigbade.processorcodeapi.javac.expressions.AssignmentExpression;
 import com.bigbade.processorcodeapi.javac.expressions.ExpressionReference;
 import com.bigbade.processorcodeapi.javac.expressions.GetVariableExpression;
@@ -21,16 +17,12 @@ import com.bigbade.processorcodeapi.javac.expressions.IJavacExpression;
 import com.bigbade.processorcodeapi.javac.expressions.LiteralExpression;
 import com.bigbade.processorcodeapi.javac.expressions.NewInstanceExpression;
 import com.bigbade.processorcodeapi.javac.expressions.SelectVariableExpression;
-import com.bigbade.processorcodeapi.javac.expressions.ThisExpression;
-import com.bigbade.processorcodeapi.javac.statements.CallStatement;
-import com.bigbade.processorcodeapi.javac.statements.IJavacStatement;
-import com.bigbade.processorcodeapi.javac.statements.IfStatement;
 
 import javax.annotation.Nullable;
 
-public class CodeFactory implements ICodeFactory {
+public class ExpressionFactory implements IExpressionFactory {
     @Override
-    public IAssignmentExpression createAssignment(ISelectVariableExpression variable, IBasicExpression value) {
+    public IAssignmentExpression createAssignment(ISelectExpression variable, IBasicExpression value) {
         return new AssignmentExpression((IJavacExpression<?>) variable, (IJavacExpression<?>) value);
     }
 
@@ -45,7 +37,7 @@ public class CodeFactory implements ICodeFactory {
     }
 
     @Override
-    public ISelectVariableExpression selectVariable(String name) {
+    public ISelectExpression selectVariable(String name) {
         return new SelectVariableExpression(name);
     }
 
@@ -61,11 +53,6 @@ public class CodeFactory implements ICodeFactory {
     }
 
     @Override
-    public ICallStatement callReference(IExpressionReference reference) {
-        return new CallStatement(reference);
-    }
-
-    @Override
     public IGetVariableExpression getVariable(IBasicExpression variable, String name) {
         return new GetVariableExpression(variable, name);
     }
@@ -76,19 +63,13 @@ public class CodeFactory implements ICodeFactory {
     }
 
     @Override
-    public IThisExpression thisReference(IClassType thisType) {
-        return new ThisExpression(thisType);
+    public ISelectExpression thisReference(IClassType thisType) {
+        return new SelectVariableExpression(thisType);
     }
 
     @Override
     public INewInstanceExpression instantiateClass(@Nullable IClassType[] generics, IClassType clazz,
                                                    IBasicExpression... params) {
         return new NewInstanceExpression(generics, clazz, params);
-    }
-
-    @Override
-    public IIfStatement createIfStatement(IBasicExpression condition, IBasicStatement ifPassed, IBasicStatement ifFailed) {
-        return new IfStatement((IJavacExpression<?>) condition, (IJavacStatement<?>) ifPassed,
-                (IJavacStatement<?>) ifFailed);
     }
 }

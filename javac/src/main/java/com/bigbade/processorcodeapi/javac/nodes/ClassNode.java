@@ -53,7 +53,7 @@ public class ClassNode implements IClassNode {
         this.classElement = element;
         this.internals = internals;
         classDecl = (JCTree.JCClassDecl) internals.getTrees().getTree(element);
-        methodPool = new JavacMethodPool(internals);
+        methodPool = new JavacMethodPool(classDecl, internals);
     }
 
     @SuppressWarnings("unchecked")
